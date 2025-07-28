@@ -62,4 +62,22 @@ async def myinfo(ctx):
         response += f"\n📧 Email: {contact['email']}"
     await ctx.send(response)
 
+@bot.command()
+async def showt17(ctx, member: discord.Member = None):
+    """Show a member's T17 gamer tag"""
+    if member is None:
+        member = ctx.author
+    
+    discord_id = member.id
+    async with bot.db.acquire() as conn:
+        t17_tag = await conn.fetchrow("""
+            SELECT tag FROM gamer_tags 
+            WHERE discord_id = $1 AND platform = 'T17'
+        """, discord_id)
+    
+    if t17_tag:
+        await ctx.send(f"🎮 {member.display_name}'s T17 tag: **{t17_tag['tag']}**")
+    else:
+        await ctx.send(f"❌ No T17 tag found for {member.display_name}")
+
 bot.run(os.getenv("DISCORD_TOKEN"))
