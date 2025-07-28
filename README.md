@@ -21,3 +21,10 @@ User modifies existing info → bot updates PostgreSQL
 - Never collect private info without opt-in consent.
 - Validate phone and email formats before storing.
 - Consider hashing contact data if needed.
+
+🚀 Launch the Bot
+From the discord-bot/ directory, run:
+docker-compose up --build
+
+
+Your bot will be live and connected to PostgreSQL, fully isolated in its container!
